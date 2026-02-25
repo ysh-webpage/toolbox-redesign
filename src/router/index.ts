@@ -22,6 +22,10 @@ const router = createRouter({
     {
       path: '/NCKU_database',
       component: () => import('@/pages/ncku_database.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/pages/404.vue')
     }
   ],
 })
