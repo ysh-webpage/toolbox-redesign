@@ -16,11 +16,11 @@ const router = createRouter({
       component: Index,
     },
     {
-      path: '/test',
+      path: '/test/',
       component: Index,
     },
     {
-      path: '/NCKU_database',
+      path: '/NCKU_database/',
       component: () => import('@/pages/ncku_database.vue')
     }
   ],
