@@ -20,6 +20,19 @@
                     </a>
                 </v-app-bar-title>
             </template>
+
+            <template #append>
+                <v-hover>
+                    <template #default = '{isHovering, props}'>
+                        <a href = '/login' class = 'd-flex align-center nodeco'>
+                            <v-card variant = plain class = 'd-flex align-center' v-ripple>
+                                <b> 登入 </b>
+                                <v-icon class = ma-2> mdi-login </v-icon>
+                            </v-card>
+                        </a>
+                    </template>
+                </v-hover>
+            </template>
         </v-app-bar>
         <v-main>
             <slot />

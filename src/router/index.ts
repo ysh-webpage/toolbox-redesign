@@ -13,21 +13,27 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: Index,
-    },
-    {
-      path: '/test',
-      component: Index,
-    },
-    {
-      path: '/NCKU_database',
-      component: () => import('@/pages/ncku_database.vue')
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      component: () => import('@/pages/404.vue')
+      component: () => import ('@/plugins/framework.vue'),
+      children: [
+        {
+          path: '',
+          component: Index
+        },
+        {
+          path: 'test',
+          component: Index
+        },
+        {
+          path: 'NCKU_database',
+          component: () => import('@/pages/ncku_database.vue')
+        },
+        {
+          path: ':pathMatch(.*)*',
+          component: () => import('@/pages/404.vue')
+        }
+      ]
     }
-  ],
+  ]
 })
 
 export default router
