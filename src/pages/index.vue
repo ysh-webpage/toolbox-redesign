@@ -45,35 +45,35 @@ const pages = [
   {
     icon: 'bus',
     name: '台南市公車',
-    url: 'tainan_bus.html',
+    url: 'tainan_bus',
     description: '台南市公車',
     color: 'teal'
   },
   {
     icon: 'railroad-light',
     name: '宿舍公車',
-    url: 'ncku_bus.html',
+    url: 'ncku_bus',
     description: '通往宿舍的公車',
     color: 'grey'
   },
   {
     icon: 'school',
     name: 'MoodlAPI',
-    url: 'moodlapi.html',
+    url: 'moodlapi',
     description: 'Moodle ，但是好看多了',
     color: 'orange'
   },
   {
     icon: 'database-alert',
     name: 'NCKU Database',
-    url: 'NCKU_database.html',
+    url: 'NCKU_database',
     description: 'ououo',
     color: 'purple'
   },
   {
     icon: 'chart-donut',
     name: 'NCKU Courseapi',
-    url: 'NCKU_courseapi.html',
+    url: 'NCKU_courseapi',
     description: '開發中',
     color: 'yellow'
   }
