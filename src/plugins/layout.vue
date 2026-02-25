@@ -2,7 +2,7 @@
     <v-app>
         <v-app-bar
             color = grey
-            class = a-3
+            class = elevate
             scroll-behavior = 'collapse'
             elevate = 3
 
@@ -10,12 +10,14 @@
         >
             <template #prepend>
                 <v-app-bar-nav-icon>
-                    <v-icon class = ma-1> fa-solid mdi-toolbox </v-icon>
+                    <a class = 'nodeco' href = '/'><v-icon class = ma-1> fa-solid mdi-toolbox </v-icon></a>
                 </v-app-bar-nav-icon>
                 <v-app-bar-title>
-                    <slot name = 'title'>
-                        {{ title }}
-                    </slot>
+                    <a class = 'nodeco' href = '/'>
+                        <slot name = 'title'>
+                            {{ title }}
+                        </slot>
+                    </a>
                 </v-app-bar-title>
             </template>
         </v-app-bar>
@@ -50,5 +52,9 @@ body {
 }
 .v-card-title {
     font-weight: 900 !important;
+}
+.nodeco {
+    text-decoration: none !important;
+    color: inherit;
 }
 </style>
