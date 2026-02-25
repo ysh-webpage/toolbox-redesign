@@ -33,6 +33,10 @@ jobs:
       - name: try to build the project
         run: npm run build
 
+      # Runs a single command using the runners shell
+      - name: why should I use router
+        run: cp dist/index.html dist/404.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
