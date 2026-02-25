@@ -8,7 +8,7 @@
                         <v-card
                             v-bind = props
                             variant = tonal
-                            class = ma-3
+                            class = 'ma-3 elevate'
                             
                             :title = page.name
                             :subtitle = page.description
