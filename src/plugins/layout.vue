@@ -6,7 +6,6 @@
             scroll-behavior = 'collapse'
             elevate = 3
 
-            @click = tt.logout
             rounded
         >
             <template #prepend>
@@ -25,12 +24,16 @@
             <template #append>
                 <v-hover>
                     <template #default = '{isHovering, props}'>
-                        <a href = '/login' class = 'd-flex align-center nodeco'>
+                        <a href = '/login' class = 'd-flex align-center nodeco' v-if = '!logined'>
                             <v-card variant = plain class = 'd-flex align-center' v-ripple>
                                 <b> 登入 </b>
                                 <v-icon class = ma-2> mdi-login </v-icon>
                             </v-card>
                         </a>
+                        <v-card v-bind = props variant = plain class = 'd-flex align-center' v-ripple @click = account.logout v-else>
+                            <b> {{ isHovering ? '登出' : username }} </b>
+                            <v-icon class = ma-2> mdi-login </v-icon>
+                        </v-card>
                     </template>
                 </v-hover>
             </template>
@@ -45,7 +48,9 @@
     import { inject } from 'vue';
     
     const error: Function = inject('error')!;
-    const tt: {[id: string]: Function} = inject('account')!;
+    const logined: boolean = inject('logined')!;
+    const account: {[id: string]: Function} = inject('account')!;
+    const username: String = inject('username')!;
 
     const props = defineProps({
         title: {

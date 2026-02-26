@@ -33,13 +33,16 @@
     // login session related
     const logined = ref(false);
     const session: Ref<string | null> = ref('');
+    const username: Ref<string | null> = ref('');
 
     provide('session', session);
     provide('logined', logined);
+    provide('username', username);
 
     const logout = () => {
+        console.log('logout');
         localStorage.removeItem('session');
-        $.post('//api.citrc.tw/wbox/logout', {
+        $.post('https://api.citrc.tw/wbox/logout', {
             id: session
         }, () => {
             info('登出成功');
@@ -48,26 +51,34 @@
     }
 
     const login = (session: string) => {
-        if(logined) logout();
+        console.log('login');
+        if(logined.value) logout();
         localStorage.setItem('session', session);
         info('登入成功');
         init();
     }
 
-    const account = ref({
-        logout, login
-    })
+    const account = {
+        logout: logout,
+        login: login
+    }
 
     provide('account', account);
 
     const init = () => {
+        console.log('init');
         session.value = localStorage.getItem('session');
+        logined.value = false;
         if(session.value) $.post('https://api.citrc.tw/wbox/whoami', {
-                                'id': session
+                                'id': session.value
                             }, (response) => {
                                 response = JSON.parse(response);
-                                if(!response['ok']) error(response.error);
-                                console.log(response);
+                                if(!response['ok']) {
+                                    error(response.error);
+                                    return;
+                                }
+                                logined.value = true;
+                                username.value = response.data;
                             })
     }
     

@@ -1,24 +1,22 @@
 <template>
     <layout>
         <v-container>
-            <dial />
+            <dial :title = 'logined ? `您好，${username}` : undefined' />
         </v-container>
     </layout>
 </template>
 
 <script lang = ts setup>
-// import $ from 'jquery'
-// import M from 'materialize-css'
-
-// import { useDisplay } from 'vuetify'
-// import { animate, stagger, onScroll, text } from 'animejs';
-
 import Dial from '@/components/dial.vue';
 import Layout from '@/plugins/layout.vue';
+import { inject } from 'vue';
+
+const logined = inject('logined');
+const username = inject('username');
 </script>
 
 <style>
 * {
-  transition: 1s all;
+    transition: .3s all;
 }
 </style>
