@@ -6,6 +6,7 @@
             scroll-behavior = 'collapse'
             elevate = 3
 
+            @click = tt.logout
             rounded
         >
             <template #prepend>
@@ -44,6 +45,7 @@
     import { inject } from 'vue';
     
     const error: Function = inject('error')!;
+    const tt: {[id: string]: Function} = inject('account')!;
 
     const props = defineProps({
         title: {
@@ -54,9 +56,6 @@
 </script>
 
 <style>
-* {
-  transition: 1s all;
-}
 body {
   background-color: white;
 }

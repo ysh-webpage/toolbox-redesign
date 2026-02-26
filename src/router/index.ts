@@ -28,6 +28,10 @@ const router = createRouter({
           component: () => import('@/pages/ncku_database.vue')
         },
         {
+          path: 'login',
+          component: () => import('@/pages/login.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: () => import('@/pages/404.vue')
         }
