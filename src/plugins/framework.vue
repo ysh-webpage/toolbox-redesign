@@ -5,6 +5,10 @@
 
 <script lang="ts" setup>
     import { onMounted, provide, ref, type Ref } from 'vue';
+
+    // Properties for other general modules
+    const loading = ref(false);
+    provide('loading', loading);
     
     // General function
     const toast: Ref<{[id: string]: any}[]> = ref([]);
@@ -40,7 +44,7 @@
     provide('username', username);
 
     const logout = () => {
-        console.log('logout');
+        // console.log('logout');
         localStorage.removeItem('session');
         $.post('https://api.citrc.tw/wbox/logout', {
             id: session
@@ -51,7 +55,7 @@
     }
 
     const login = (session: string) => {
-        console.log('login');
+        // console.log('login');
         if(logined.value) logout();
         localStorage.setItem('session', session);
         info('登入成功');
@@ -66,7 +70,7 @@
     provide('account', account);
 
     const init = () => {
-        console.log('init');
+        // console.log('init');
         session.value = localStorage.getItem('session');
         logined.value = false;
         if(session.value) $.post('https://api.citrc.tw/wbox/whoami', {

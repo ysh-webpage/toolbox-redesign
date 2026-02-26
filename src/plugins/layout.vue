@@ -1,18 +1,18 @@
 <template>
     <v-app>
         <v-app-bar
-            color = grey
-            class = elevate
-            scroll-behavior = 'collapse'
-            elevate = 3
-
-            rounded
+        color = grey
+        class = elevate
+        scroll-behavior = 'collapse'
+        elevate = 3
+        
+        rounded
         >
-            <template #prepend>
-                <v-app-bar-nav-icon>
-                    <a class = 'nodeco' href = '/'><v-icon class = ma-1> fa-solid mdi-toolbox </v-icon></a>
-                </v-app-bar-nav-icon>
-                <v-app-bar-title>
+        <template #prepend>
+            <v-app-bar-nav-icon>
+                <a class = 'nodeco' href = '/'><v-icon class = ma-1> fa-solid mdi-toolbox </v-icon></a>
+            </v-app-bar-nav-icon>
+            <v-app-bar-title>
                     <a class = 'nodeco' href = '/'>
                         <slot name = 'title'>
                             {{ title }}
@@ -20,7 +20,7 @@
                     </a>
                 </v-app-bar-title>
             </template>
-
+            
             <template #append>
                 <v-hover>
                     <template #default = '{isHovering, props}'>
@@ -39,18 +39,20 @@
             </template>
         </v-app-bar>
         <v-main>
+            <v-progress-linear :indeterminate = loading bg-color = transparent />
             <slot />
         </v-main>
     </v-app>
 </template>
 
 <script lang = ts setup>
-    import { inject } from 'vue';
+    import { inject, type Ref } from 'vue';
     
     const error: Function = inject('error')!;
     const logined: boolean = inject('logined')!;
     const account: {[id: string]: Function} = inject('account')!;
     const username: String = inject('username')!;
+    const loading: Ref<boolean> = inject('loading')!;
 
     const props = defineProps({
         title: {
