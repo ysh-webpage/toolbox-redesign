@@ -41,19 +41,16 @@
 </template>
 
 <script lang = ts setup>
-// import $ from 'jquery'
-// import M from 'materialize-css'
+    import { inject } from 'vue';
+    
+    const error: Function = inject('error')!;
 
-// import { useDisplay } from 'vuetify'
-// import { animate, stagger, onScroll, text } from 'animejs';
-// import { onMounted } from 'vue';
-
-const props = defineProps({
-    title: {
-        type: String,
-        default: "ysh's toolbox"
-    }
-})
+    const props = defineProps({
+        title: {
+            type: String,
+            default: "ysh's toolbox"
+        }
+    })
 </script>
 
 <style>
