@@ -73,4 +73,7 @@ body {
     text-decoration: none !important;
     color: inherit;
 }
+.v-app-bar {
+    position: fixed !important;
+}
 </style>

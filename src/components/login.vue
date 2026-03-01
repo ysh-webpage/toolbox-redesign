@@ -9,7 +9,7 @@
 </template>
 
 <script lang = 'ts' setup>
-import { inject, ref } from 'vue';
+import { inject, ref, type Ref } from 'vue';
 import { $ } from 'jquery';
 
 const username = ref('');
@@ -18,11 +18,19 @@ const password = ref('');
 const account: {[id: string]: Function} = inject('account')!;
 const error: Function = inject('error')!;
 
+const loading: Ref<boolean> = inject('loading')!;
+
 const login = () => {
-    $.post('https://api.citrc.tw/wbox/login', {
-        username: username.value,
-        password: password.value
-    }, (response) => {
+    loading.value = true;
+    $.ajax({
+        url: 'https://api.citrc.tw/wbox/login',
+        method: 'POST',
+        timeout: 5000,
+        data: {
+            username: username.value,
+            password: password.value
+        }
+    }).done((response) => {
         response = JSON.parse(response);
         if(!response.ok) {
             error(response.error || '登入失敗');
@@ -31,6 +39,10 @@ const login = () => {
         console.log(account);
         account.login!(response.id);
         location.href = '/';
+    }).fail(() => {
+        error('Nerwork Error');
+    }).always(() => {
+        loading.value = false;
     })
 }
 </script>
