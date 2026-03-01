@@ -7,6 +7,7 @@
             </v-col>
         </v-row>
         <v-data-table-server
+            :items-length = n
             :headers = header
             :items = data
         />
@@ -31,6 +32,7 @@ const page = ref(0);
 const sort = ref('');
 const data = ref([]);
 const header: Ref<{[id: string]: string}[]> = ref([]);
+const n: Ref<number> = ref(0);
 
 const submit = () => {
     loading.value = true;
@@ -59,6 +61,7 @@ const submit = () => {
             key: x,
             align: 'start'
         }});
+        n.value = (response.data.pages + 1) * 100;
     }).fail(() => {
         error('請求失敗')
     }).always(() => {
