@@ -3,13 +3,15 @@
         <v-row justify = center>
             <v-col cols = 8>
                 <v-text-field class = ma-3 v-model = search label = 尋 @keydown.enter = submit />
-                <v-card class = 'ma-3 text-center' title = 找人 prepend-icon = 'mdi-shield-search' v-ripple @click = submit />
+                <v-card class = 'ma-3 text-center' title = 找人 prepend-icon = 'mdi-shield-search' v-ripple @click = submit @dblclick = gp />
             </v-col>
             <v-data-table-server
                 :items-length = n
                 :headers = header
                 :items = data
                 :class = 'loading ? `blur` : undefined'
+                :group-by = group
+
                 @update:options = submit
             >
                 <template #item.profileimageurlsmall = '{value}'>
@@ -47,7 +49,14 @@ const page = ref(0);
 const sort = ref('');
 const data = ref([]);
 const header: Ref<{[id: string]: string}[]> = ref([]);
+const group: Ref<{key: string, order: 'asc' | 'desc'}[]> = ref([]);
 const n: Ref<number> = ref(0);
+
+const gp = () => {
+    const now: {key: string, order: 'asc' | 'desc'}[] = [{key: 'department', order: 'asc'}];
+    if(group.value.length == 0) group.value = now;
+    else group.value = [];
+}
 
 const names: {[id: string]: string} = {
     'id': '編號',
