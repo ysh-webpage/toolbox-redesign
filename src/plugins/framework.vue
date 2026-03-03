@@ -27,7 +27,7 @@
     const info = (x: string) => {
         toast.value.push({
             text: x,
-            prependIcon: 'mdi-info',
+            prependIcon: 'mdi-check-circle',
             color: 'teal',
             timer: 'bottom'
         })

@@ -76,6 +76,13 @@ const pages = [
     url: 'NCKU_courseapi',
     description: '開發中',
     color: 'yellow'
+  },
+  {
+    icon: 'timeline-clock',
+    name: '時間軸',
+    url: 'timeline',
+    description: '井然有序',
+    color: 'cyan'
   }
 ];
 </script>

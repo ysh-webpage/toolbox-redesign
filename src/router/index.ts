@@ -32,6 +32,10 @@ const router = createRouter({
           component: () => import('@/pages/login.vue')
         },
         {
+          path: 'timeline',
+          component: () => import('@/pages/timeline.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: () => import('@/pages/404.vue')
         }
