@@ -57,10 +57,11 @@ watch(inited, (neu, alt) => {
 
 const submit = (x: {[id: string]: any} | undefined) => {
     if(!inited.value) return;
-    // console.log(x);
     if(x?.page != undefined) page.value = x.page;
     else page.value = 0;
 
+    if(x?.sortBy[0]?.key != undefined) sort.value = x?.sortBy[0]?.key;
+    
     loading.value = true;
     $.ajax({
         url: 'https://api.citrc.tw/NCKU/whoisthis',
