@@ -17,6 +17,6 @@ const kick: Function = inject('kick')!;
 
 watch(inited, (neu, alt) => {
     if(!neu) return;
-    if(logined) kick('你已經登入了');
+    if(logined.value) kick('你已經登入了');
 })
 </script>
