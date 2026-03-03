@@ -102,8 +102,10 @@ const submit = (x: {[id: string]: any} | undefined) => {
 }
 #loading_cover {
     position: fixed;
-    top: calc(50vh - 25px);
-    left: calc(50vw - 25px);
+    height: 30vh;
+    width: 30vw;
+    top: 35vh;
+    left: 35vw;
     z-index: 5;
     color: black;
     font-weight: 900;
