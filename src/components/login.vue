@@ -17,6 +17,7 @@ const password = ref('');
 
 const account: {[id: string]: Function} = inject('account')!;
 const error: Function = inject('error')!;
+const qinfo: Function = inject('qinfo')!;
 
 const loading: Ref<boolean> = inject('loading')!;
 
@@ -38,9 +39,10 @@ const login = () => {
         }
         console.log(account);
         account.login!(response.id);
-        location.href = '/';
+        qinfo('登入成功');
+        window.history.back();
     }).fail(() => {
-        error('Nerwork Error');
+        error('伺服器錯誤');
     }).always(() => {
         loading.value = false;
     })

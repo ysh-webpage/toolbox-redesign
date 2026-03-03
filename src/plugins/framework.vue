@@ -49,7 +49,7 @@
         // console.log('logout');
         localStorage.removeItem('session');
         $.post('https://api.citrc.tw/wbox/logout', {
-            id: session
+            id: session.value
         }, () => {
             info('登出成功');
             init();
@@ -85,7 +85,7 @@
         }).done((response) => {
             response = JSON.parse(response);
             if(!response['ok']) {
-                error(response.error);
+                localStorage.removeItem('session');
                 return;
             }
             logined.value = true;
@@ -104,4 +104,40 @@
     onMounted(() => {
         init();
     })
+
+    // toast API
+    const qerror = (x: string) => {
+        localStorage.setItem('message_queue', x);
+        localStorage.setItem('message_type', 'error');
+    }
+    const qinfo = (x: string) => {
+        localStorage.setItem('message_queue', x);
+        localStorage.setItem('message_type', 'info');
+    }
+    onMounted(() => {
+        const message = localStorage.getItem('message_queue');
+        if(message == null) return;
+        const type = localStorage.getItem('message_type');
+
+        localStorage.removeItem('message_queue');
+        localStorage.removeItem('message_type');
+
+        switch(type) {
+            case 'error':
+                error(message);
+                break;
+            case 'info':
+                info(message);
+                break;
+            default:
+                info(message);
+        }
+    })
+    const kick = (x: string) => {
+        qerror(x);
+        window.history.back();
+    }
+    provide('qerror', qerror);
+    provide('kick', kick);
+    provide('qinfo', qinfo);
 </script>

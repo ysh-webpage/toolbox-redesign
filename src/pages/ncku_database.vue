@@ -30,15 +30,16 @@
 <script lang="ts" setup>
 import Layout from '@/plugins/layout.vue';
 import { $ } from 'jquery';
-import { inject, ref, type Ref } from 'vue';
+import { inject, ref, watch, type Ref } from 'vue';
 
 const inited: Ref<boolean> = inject('inited')!;
 const session: Ref<String> = inject('session')!;
 const logined: Ref<boolean> = inject('logined')!;
 const account: {[id: string]: Function} = inject('account')!;
 
-const info: Function = inject('info')!;
+// const info: Function = inject('info')!;
 const error: Function = inject('error')!;
+const kick: Function = inject('kick')!;
 const loading: Ref<boolean> = inject('loading')!;
 
 const search = ref('');
@@ -48,9 +49,15 @@ const data = ref([]);
 const header: Ref<{[id: string]: string}[]> = ref([]);
 const n: Ref<number> = ref(0);
 
+watch(inited, (neu, alt) => {
+    // console.log(alt, neu, logined.value);
+    if(!neu) return;
+    if(!logined.value) kick('請先登入');
+})
+
 const submit = (x: {[id: string]: any} | undefined) => {
     if(!inited.value) return;
-    console.log(x);
+    // console.log(x);
     if(x?.page != undefined) page.value = x.page;
     else page.value = 0;
 
