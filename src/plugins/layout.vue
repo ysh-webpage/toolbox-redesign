@@ -10,7 +10,10 @@
         >
         <template #prepend>
             <v-app-bar-nav-icon>
-                <a class = 'nodeco' href = '/'><v-icon class = ma-1> fa-solid mdi-toolbox </v-icon></a>
+                <a class = 'nodeco' href = '/'>
+                    <v-progress-circular indeterminate v-if = loading />
+                    <v-icon class = ma-1 v-else> mdi-toolbox </v-icon>
+                </a>
             </v-app-bar-nav-icon>
             <v-app-bar-title>
                     <a class = 'nodeco' href = '/'>

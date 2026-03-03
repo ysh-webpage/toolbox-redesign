@@ -7,8 +7,10 @@
     import { onMounted, provide, ref, type Ref } from 'vue';
 
     // Properties for other general modules
-    const loading = ref(false);
+    const inited = ref(false);
+    const loading = ref(true);
     provide('loading', loading);
+    provide('inited', inited);
     
     // General function
     const toast: Ref<{[id: string]: any}[]> = ref([]);
@@ -73,17 +75,28 @@
         // console.log('init');
         session.value = localStorage.getItem('session');
         logined.value = false;
-        if(session.value) $.post('https://api.citrc.tw/wbox/whoami', {
-                                'id': session.value
-                            }, (response) => {
-                                response = JSON.parse(response);
-                                if(!response['ok']) {
-                                    error(response.error);
-                                    return;
-                                }
-                                logined.value = true;
-                                username.value = response.data;
-                            })
+        if(session.value) $.ajax({
+            url: 'https://api.citrc.tw/wbox/whoami',
+            method: 'POST',
+            timeout: 5000,
+            data: {
+                id: session.value
+            }
+        }).done((response) => {
+            response = JSON.parse(response);
+            if(!response['ok']) {
+                error(response.error);
+                return;
+            }
+            logined.value = true;
+            username.value = response.data;
+        }).fail(() => {
+            error('驗證失敗');
+        }).always(() => {
+            inited.value = true;
+            loading.value = false;
+        })
+        else inited.value = true, loading.value = false;
     }
     
     import $ from 'jquery';
