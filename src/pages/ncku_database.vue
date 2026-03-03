@@ -5,25 +5,25 @@
                 <v-text-field class = ma-3 v-model = search label = 尋 @keydown.enter = submit />
                 <v-card class = 'ma-3 text-center' title = 找人 prepend-icon = 'mdi-shield-search' v-ripple @click = submit />
             </v-col>
+            <v-data-table-server
+                :items-length = n
+                :headers = header
+                :items = data
+                :class = 'loading ? `blur` : undefined'
+                @update:options = submit
+            >
+                <template #item.profileimageurlsmall = '{value}'>
+                    <v-img :src = value max-height = 50px />
+                </template>
+                <template #item.profileimageurl = '{value}'>
+                    <v-img :src = value max-height = 50px />
+                </template>
+            </v-data-table-server>
+            <div id = loading_cover v-if = loading class = 'align-content-center text-center'>
+                <v-progress-circular size = 50 class = ma-3 indeterminate /><br>
+                <b> 載入中 </b>
+            </div>
         </v-row>
-        <v-data-table-server
-            :items-length = n
-            :headers = header
-            :items = data
-            :class = 'loading ? `blur` : undefined'
-            @update:options = submit
-        >
-            <template #item.profileimageurlsmall = '{value}'>
-                <v-img :src = value />
-            </template>
-            <template #item.profileimageurl = '{value}'>
-                <v-img :src = value />
-            </template>
-        </v-data-table-server>
-        <div id = loading_cover v-if = loading class = 'align-content-center text-center'>
-            <v-progress-circular size = 50 class = ma-3 indeterminate /><br>
-            <b> 載入中 </b>
-        </div>
     </layout>
 </template>
 
@@ -49,6 +49,18 @@ const data = ref([]);
 const header: Ref<{[id: string]: string}[]> = ref([]);
 const n: Ref<number> = ref(0);
 
+const names: {[id: string]: string} = {
+    'id': '編號',
+    'fullname': '名字',
+    'department': '系所',
+    'idnumber': '學號',
+    // 'profileimageurlsmall': 'profileimageurlsmall',
+    'profileimageurl': '頭像',
+    'search_quote': '批次',
+    '宿舍': '宿舍',
+    // '宿舍候補序號': '宿舍候補序號',
+    // 'old_dorm': 'old_dorm'
+};
 watch(inited, (neu, alt) => {
     // console.log(alt, neu, logined.value);
     if(!neu) return;
@@ -60,7 +72,7 @@ const submit = (x: {[id: string]: any} | undefined) => {
     if(x?.page != undefined) page.value = x.page;
     else page.value = 0;
 
-    if(x?.sortBy[0]?.key != undefined) sort.value = x?.sortBy[0]?.key;
+    if((x?.sortBy || [0])[0]?.key != undefined) sort.value = x?.sortBy[0]?.key;
     
     loading.value = true;
     $.ajax({
@@ -83,8 +95,8 @@ const submit = (x: {[id: string]: any} | undefined) => {
             }
         }
         data.value = response.data.result;
-        if(data.value.length > 0) header.value = Object.keys(data.value[0]!).map((x) => {return {
-            title: x,
+        if(data.value.length > 0) header.value = Object.keys(data.value[0]!).filter((x) => (x in names)).map((x) => {return {
+            title: names[x] || x,
             key: x,
             align: 'start'
         }});
