@@ -49,8 +49,8 @@ const loading: Ref<boolean> = inject('loading')!;
 
 watch(inited, (neu, alt) => {
     if(!neu) return;
-    if(!logined.value) kick('請先登入');
-    online.value = (localStorage.getItem('timeline.online') == '1') || false;
+    // if(!logined.value) kick('請先登入');
+    online.value = logined.value && ((localStorage.getItem('timeline.online') == '1') || false);
     init();
 })
 

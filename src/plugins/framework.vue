@@ -136,7 +136,7 @@
     })
     const kick = (x: string) => {
         qerror(x);
-        window.history.back();
+        location.href = '/';
     }
     provide('qerror', qerror);
     provide('kick', kick);
