@@ -50,11 +50,13 @@ const loading: Ref<boolean> = inject('loading')!;
 watch(inited, (neu, alt) => {
     if(!neu) return;
     if(!logined.value) kick('請先登入');
+    online.value = (localStorage.getItem('timeline.online') == '1') || false;
     init();
 })
 
 watch(online, (neu, alt) => {
     init();
+    localStorage.setItem('timeline.online', (neu ? '1' : '0'));
 })
 
 const load = () => {
