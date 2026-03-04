@@ -32,7 +32,7 @@ const login = () => {
             password: password.value
         }
     }).done((response) => {
-        response = JSON.parse(response);
+        // response = JSON.parse(response);
         if(!response.ok) {
             error(response.error || '登入失敗');
             return;
