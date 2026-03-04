@@ -34,6 +34,7 @@
     }
     
     provide('error', error);
+    provide('info', info);
     provide('toast', toast);
 
     // login session related
