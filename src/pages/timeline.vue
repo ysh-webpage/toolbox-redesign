@@ -12,7 +12,8 @@
                 </v-card>
             </v-col>
             <v-col cols = 12 md = 6>
-                <Timeline_save @submit = init :index = index />
+                <v-switch v-model = online v-if = logined inset label = 同步 />
+                <Timeline_save @submit = submit :index = index :online = online />
             </v-col>
         </v-row>
     </Layout>
@@ -22,6 +23,7 @@
 import Timeline_save from '@/components/timeline_save.vue';
 import Timeline_task from '@/components/timeline_task.vue';
 import Layout from '@/plugins/layout.vue';
+import { $ } from 'jquery';
 import { inject, onMounted, ref, watch, type Ref } from 'vue';
 
 interface task {
@@ -33,19 +35,87 @@ interface task {
 
 const f: Ref<task[]> = ref([])!;
 const index: Ref<number | null> = ref(null);
+const online: Ref<boolean> = ref(false);
 
 const inited: Ref<boolean> = inject('inited')!;
 const logined: Ref<boolean> = inject('logined')!;
 const kick: Function = inject('kick')!;
 
+// Only for online version
+const session: Ref<string> = inject('session')!;
+const error: Function = inject('error')!;
+const info: Function = inject('info')!;
+const loading: Ref<boolean> = inject('loading')!;
+
 watch(inited, (neu, alt) => {
     if(!neu) return;
     if(!logined.value) kick('請先登入');
+    init();
 })
 
-const init = () => {
+watch(online, (neu, alt) => {
+    init();
+})
+
+const load = () => {
     f.value = JSON.parse((localStorage.getItem('tasks') || '[]'));
     index.value = null;
+}
+
+const submit = () => {
+    load();
+
+    if(online.value) {
+        loading.value = true;
+        $.ajax({
+            url: 'https://api.citrc.tw/timeline/sync',
+            timeout: 10000,
+            method: 'POST',
+            data: {
+                id: session.value,
+                data: JSON.stringify(f.value)
+            }
+        }).done((response) => {
+            if(!response.ok) error(response.error);
+            else info('同步成功');
+            init();
+        }).fail(() => {
+            error('同步失敗');
+        }).always(() => {
+            loading.value = false;
+        })
+    }
+    else init();
+}
+
+const init = () => {
+    load();
+
+    // Online Version
+    if(!inited.value) return;
+    if(online.value) {
+        loading.value = true;
+        $.ajax({
+            url: 'https://api.citrc.tw/timeline/get',
+            timeout: 5000,
+            method: 'POST',
+            data: {
+                id: session.value
+            }
+        }).done((response) => {
+            console.log(response);
+            if(!response.ok) error(response.error);
+            else {
+                f.value = response.data;
+                localStorage.setItem('tasks', JSON.stringify(f.value));
+            }
+        }).fail(() => {
+            error('連線失敗，正在檢視本地版');
+            online.value = false;
+        }).always(() => {
+            loading.value = false;
+        })
+    }
 }
 
 onMounted(init);

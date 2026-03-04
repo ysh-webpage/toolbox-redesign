@@ -95,7 +95,6 @@ const submit = (x: {[id: string]: any} | undefined) => {
             sort: sort.value
         }
     }).done((response) => {
-        response = JSON.parse(response);
         if(!response.ok) {
             error(response.error);
             if(response.data?.logout) {
