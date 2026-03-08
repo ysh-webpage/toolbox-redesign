@@ -52,7 +52,7 @@ const pages = [
   {
     icon: 'railroad-light',
     name: '宿舍公車',
-    url: 'ncku_bus',
+    url: 'https://toolbox.citrc.tw/ncku_bus.html',
     description: '通往宿舍的公車',
     color: 'grey'
   },
@@ -72,9 +72,9 @@ const pages = [
   },
   {
     icon: 'chart-donut',
-    name: 'NCKU Courseapi',
-    url: 'NCKU_courseapi',
-    description: '開發中',
+    name: 'Old Toolbox',
+    url: 'https://toolbox.citrc.tw',
+    description: '舊的工具箱',
     color: 'yellow'
   },
   {
