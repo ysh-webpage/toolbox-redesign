@@ -36,6 +36,10 @@ const router = createRouter({
           component: () => import('@/pages/timeline.vue')
         },
         {
+          path: 'ncku_bus',
+          component: () => import('@/pages/ncku_bus.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: () => import('@/pages/404.vue')
         }

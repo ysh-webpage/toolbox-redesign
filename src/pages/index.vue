@@ -17,6 +17,6 @@ const username = inject('username');
 
 <style>
 * {
-    transition: .3s all;
+    transition: .7s all;
 }
 </style>
